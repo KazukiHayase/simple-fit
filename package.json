@@ -8,6 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "tsc": "tsc",
+    "ci": "biome lint . && tsc",
     "check": "biome check --apply .",
     "prepare": "husky install"
   },
