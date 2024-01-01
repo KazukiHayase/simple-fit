@@ -1,8 +1,8 @@
-import registerRootComponent from 'expo/build/launch/registerRootComponent';
-import { Tmp } from '@/components/Tmp';
+import { Tmp } from "@/components/Tmp";
+import registerRootComponent from "expo/build/launch/registerRootComponent";
 
 export default function App() {
-  return <Tmp />;
+	return <Tmp />;
 }
 
 registerRootComponent(App);
