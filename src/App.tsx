@@ -1,8 +1,8 @@
-import { Tmp } from "@/components/Tmp";
+import { Home } from "@/pages/Home";
 import registerRootComponent from "expo/build/launch/registerRootComponent";
 
 export default function App() {
-	return <Tmp />;
+	return <Home />;
 }
 
 registerRootComponent(App);
