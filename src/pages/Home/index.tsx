@@ -1,20 +1,33 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { Appbar, Text, useTheme } from "react-native-paper";
 
 export const Home: React.FC = () => {
+	const theme = useTheme();
+	const today = "2021/08/01";
+
 	return (
-		<View style={styles.wrapper}>
-			<Text>Open up App.tsx to start working on your app!</Text>
-			<StatusBar style="auto" />
-		</View>
+		<>
+			<Appbar.Header
+				style={[
+					styles.header,
+					{ borderBottomColor: theme.colors.surfaceVariant },
+				]}
+			>
+				<Appbar.Content
+					title={today}
+					titleStyle={{ fontSize: 18, fontWeight: "bold" }}
+				/>
+			</Appbar.Header>
+			<Text variant="displayMedium">Todo</Text>
+		</>
 	);
 };
 
 const styles = StyleSheet.create({
-	wrapper: {
-		flex: 1,
-		backgroundColor: "#fff",
+	header: {
+		display: "flex",
 		alignItems: "center",
-		justifyContent: "center",
+		height: 40,
+		borderBottomWidth: 1,
 	},
 });
