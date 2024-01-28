@@ -76,7 +76,7 @@ const useStyle = () => {
 			position: "absolute",
 			right: 30,
 			bottom: 100,
-			borderRadius: "50%",
+			borderRadius: 50,
 		},
 	});
 };
