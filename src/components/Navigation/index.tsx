@@ -3,11 +3,10 @@ import { Icon } from "react-native-paper";
 
 // TODO: typed router対応
 export const Navigation: React.FC = () => {
+	const today = "2021/08/01";
+
 	return (
-		<Tabs
-			// TODO: ヘッダーもここで定義する
-			screenOptions={{ headerShown: false }}
-		>
+		<Tabs>
 			<Tabs.Screen
 				name="index"
 				options={{
@@ -15,6 +14,7 @@ export const Navigation: React.FC = () => {
 					tabBarIcon: ({ color, size }) => (
 						<Icon source="home" color={color} size={size} />
 					),
+					headerTitle: today,
 				}}
 			/>
 			<Tabs.Screen

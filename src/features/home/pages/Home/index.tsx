@@ -1,15 +1,11 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Appbar, Divider, FAB, List, useTheme } from "react-native-paper";
+import { Divider, FAB, List, useTheme } from "react-native-paper";
 
 export const Home: React.FC = () => {
 	const styles = useStyle();
-	const today = "2021/08/01";
 
 	return (
 		<>
-			<Appbar.Header style={styles.header}>
-				<Appbar.Content title={today} titleStyle={styles.headerTitle} />
-			</Appbar.Header>
 			<ScrollView>
 				<View style={styles.wrapper}>
 					<List.Section>
