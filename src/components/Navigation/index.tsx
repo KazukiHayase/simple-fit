@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router/tabs";
 import { Icon } from "react-native-paper";
 
-// TODO: typed router対応
 export const Navigation: React.FC = () => {
 	const today = "2021/08/01";
 
