@@ -16,6 +16,7 @@
     "src/**/*.{tsx,ts}": ["biome check --apply"]
   },
   "dependencies": {
+    "dayjs": "^1.11.10",
     "expo": "^50.0.0",
     "expo-constants": "~15.4.5",
     "expo-linking": "~6.2.2",
