@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
 							今日のトレーニング
 						</List.Subheader>
 						{Array.from({ length: 30 }).map((_, i) => (
-							<>
+							<View key={`key-${i}`}>
 								<List.Item
 									title="ベンチプレス"
 									description="5セット"
@@ -29,7 +29,7 @@ export const Home: React.FC = () => {
 									onPress={() => alert(`pressed ${i}`)}
 								/>
 								<Divider />
-							</>
+							</View>
 						))}
 					</List.Section>
 				</View>
