@@ -1,8 +1,9 @@
+import dayjs from "dayjs";
 import { Tabs } from "expo-router/tabs";
 import { Icon } from "react-native-paper";
 
 export const Navigation: React.FC = () => {
-	const today = "2021/08/01";
+	const today = dayjs().locale("ja").format("YYYY/MM/DD");
 
 	return (
 		<Tabs>
