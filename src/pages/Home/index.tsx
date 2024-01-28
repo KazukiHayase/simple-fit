@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import { Appbar, Divider, List, useTheme } from "react-native-paper";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Appbar, Divider, FAB, List, useTheme } from "react-native-paper";
 
 export const Home: React.FC = () => {
 	const styles = useStyle();
@@ -10,26 +10,35 @@ export const Home: React.FC = () => {
 			<Appbar.Header style={styles.header}>
 				<Appbar.Content title={today} titleStyle={styles.headerTitle} />
 			</Appbar.Header>
-			<View style={styles.wrapper}>
-				<List.Section>
-					<List.Subheader style={styles.sectionHeader}>
-						今日のトレーニング
-					</List.Subheader>
-					{Array.from({ length: 5 }).map((_, i) => (
-						<>
-							<List.Item
-								title="ベンチプレス"
-								description="5セット"
-								right={(props) => <List.Icon {...props} icon="chevron-right" />}
-								titleStyle={{ fontWeight: "bold" }}
-								style={styles.listItem}
-								onPress={() => alert(`pressed ${i}`)}
-							/>
-							<Divider />
-						</>
-					))}
-				</List.Section>
-			</View>
+			<ScrollView>
+				<View style={styles.wrapper}>
+					<List.Section>
+						<List.Subheader style={styles.sectionHeader}>
+							今日のトレーニング
+						</List.Subheader>
+						{Array.from({ length: 30 }).map((_, i) => (
+							<>
+								<List.Item
+									title="ベンチプレス"
+									description="5セット"
+									right={(props) => (
+										<List.Icon {...props} icon="chevron-right" />
+									)}
+									titleStyle={{ fontWeight: "bold" }}
+									style={styles.listItem}
+									onPress={() => alert(`pressed ${i}`)}
+								/>
+								<Divider />
+							</>
+						))}
+					</List.Section>
+				</View>
+			</ScrollView>
+			<FAB
+				icon="plus"
+				style={styles.addButton}
+				onPress={() => alert("pressed")}
+			/>
 		</>
 	);
 };
@@ -50,8 +59,9 @@ const useStyle = () => {
 			fontWeight: "bold",
 		},
 		wrapper: {
-			height: "100%",
+			flex: 1,
 			padding: 16,
+			overflow: "scroll",
 			backgroundColor: colors.background,
 		},
 		sectionHeader: {
@@ -61,6 +71,11 @@ const useStyle = () => {
 		listItem: {
 			width: "100%",
 			paddingRight: 10,
+		},
+		addButton: {
+			position: "absolute",
+			right: 30,
+			bottom: 100,
 		},
 	});
 };
