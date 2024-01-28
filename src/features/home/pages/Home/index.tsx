@@ -71,7 +71,7 @@ const useStyle = () => {
 		addButton: {
 			position: "absolute",
 			right: 30,
-			bottom: 100,
+			bottom: 50,
 			borderRadius: 50,
 		},
 	});
