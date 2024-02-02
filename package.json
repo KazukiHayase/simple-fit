@@ -16,6 +16,7 @@
     "src/**/*.{tsx,ts}": ["biome check --apply"]
   },
   "dependencies": {
+    "@realm/react": "^0.6.2",
     "dayjs": "^1.11.10",
     "expo": "^50.0.0",
     "expo-constants": "~15.4.5",
@@ -26,7 +27,8 @@
     "react-native": "0.73.2",
     "react-native-paper": "^5.11.5",
     "react-native-safe-area-context": "4.8.2",
-    "react-native-screens": "~3.29.0"
+    "react-native-screens": "~3.29.0",
+    "realm": "^12.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
