@@ -18,7 +18,7 @@
   "dependencies": {
     "@realm/react": "^0.6.2",
     "dayjs": "^1.11.10",
-    "expo": "^50.0.4",
+    "expo": "^50.0.5",
     "expo-constants": "~15.4.5",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.6",
