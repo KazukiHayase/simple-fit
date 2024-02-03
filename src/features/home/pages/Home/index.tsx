@@ -1,8 +1,29 @@
+import { Training } from "@/realm/model/Training";
+import { useQuery, useRealm } from "@realm/react";
+import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Divider, FAB, List, useTheme } from "react-native-paper";
+import { BSON } from "realm";
 
 export const Home: React.FC = () => {
 	const styles = useStyle();
+
+	const realm = useRealm();
+
+	const addProfile = () => {
+		realm.write(() => {
+			realm.create(Training, {
+				_id: new BSON.ObjectId(),
+				name: "ベンチプレス",
+			});
+		});
+	};
+
+	const profiles = useQuery(Training);
+
+	useEffect(() => {
+		alert(JSON.stringify(profiles));
+	}, [profiles]);
 
 	return (
 		<>
@@ -30,11 +51,7 @@ export const Home: React.FC = () => {
 					</List.Section>
 				</View>
 			</ScrollView>
-			<FAB
-				icon="plus"
-				style={styles.addButton}
-				onPress={() => alert("pressed")}
-			/>
+			<FAB icon="plus" style={styles.addButton} onPress={addProfile} />
 		</>
 	);
 };
