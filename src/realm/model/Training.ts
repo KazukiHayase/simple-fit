@@ -4,6 +4,7 @@ import { TrainingType } from "./TrainingType";
 
 export class Training extends Realm.Object {
 	_id!: BSON.ObjectId;
+	date!: Date;
 	type!: TrainingType;
 	sets!: TrainingSet[];
 
@@ -11,6 +12,7 @@ export class Training extends Realm.Object {
 		name: "Training",
 		properties: {
 			_id: "objectId",
+			date: "date",
 			type: "TrainingType",
 			sets: "TrainingSet[]",
 		},
