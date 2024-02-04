@@ -1,19 +1,38 @@
-import { useQuery } from "@/realm";
+import { useQuery, useRealm } from "@/realm";
 import { Training } from "@/realm/model/Training";
 import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Divider, FAB, List, useTheme } from "react-native-paper";
+import { BSON } from "realm";
 
 export const Home: React.FC = () => {
 	const styles = useStyle();
 
-	const addProfile = () => {};
+	const realm = useRealm();
+	// const profiles = useQuery(Training);
 
-	const profiles = useQuery(Training);
-
+	// FIXME: 動作確認用データ投入
 	useEffect(() => {
-		alert(JSON.stringify(profiles));
-	}, [profiles]);
+		realm.write(() => {
+			realm.deleteAll();
+			const type = realm.create("TrainingType", {
+				_id: new BSON.ObjectId(),
+				name: "ベンチプレス",
+				part: "CHEST",
+			});
+
+			realm.create("Training", {
+				_id: new BSON.ObjectId(),
+				date: new Date(),
+				type,
+				sets: [
+					{ weight: 10, reps: 10, memo: "" },
+					{ weight: 20, reps: 20, memo: "" },
+					{ weight: 30, reps: 30, memo: "" },
+				],
+			});
+		});
+	}, [realm]);
 
 	return (
 		<>
@@ -41,7 +60,11 @@ export const Home: React.FC = () => {
 					</List.Section>
 				</View>
 			</ScrollView>
-			<FAB icon="plus" style={styles.addButton} onPress={addProfile} />
+			<FAB
+				icon="plus"
+				style={styles.addButton}
+				onPress={() => alert("onPress")}
+			/>
 		</>
 	);
 };
