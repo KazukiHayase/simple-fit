@@ -1,3 +1,4 @@
-import { Training } from "./Training";
+import { Training, TrainingSet } from "./Training";
+import { TrainingType } from "./TrainingType";
 
-export const schema = [Training];
+export const schema = [Training, TrainingSet, TrainingType];
