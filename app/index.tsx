@@ -1,7 +1,9 @@
-import { Home } from "@/features/home/pages/Home";
+import {Redirect} from "expo-router";
 
 const Page = () => {
-	return <Home />;
+	return (
+    <Redirect href="/home/" />
+  );
 };
 
 export default Page;

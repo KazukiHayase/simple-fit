@@ -1,6 +1,7 @@
 import { useQuery, useRealm } from "@/realm";
 import { Training } from "@/realm/model/Training";
 import dayjs from "dayjs";
+import { Link } from "expo-router";
 import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Divider, FAB, List, useTheme } from "react-native-paper";
@@ -67,11 +68,9 @@ export const Home: React.FC = () => {
 					</List.Section>
 				</View>
 			</ScrollView>
-			<FAB
-				icon="plus"
-				style={styles.addButton}
-				onPress={() => alert("onPress")}
-			/>
+			<Link href="/home/modal" asChild>
+				<FAB icon="plus" style={styles.addButton} />
+			</Link>
 		</>
 	);
 };
