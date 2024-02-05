@@ -1,7 +1,7 @@
-import { Text } from "react-native";
+import { TrainingAdd } from "@/features/training/pages/TrainingAdd";
 
 const Page = () => {
-	return <Text>hoge</Text>;
+	return <TrainingAdd />;
 };
 
 export default Page;
