@@ -18,3 +18,14 @@ export const TrainingPart: Record<TrainingPart, string> = {
 	AEROBIC: "有酸素",
 	OTHER: "その他",
 };
+
+export const TrainingPartList: TrainingPart[] = [
+	"SHOULDER",
+	"CHEST",
+	"ARM",
+	"BACK",
+	"ABDOMEN",
+	"LEG",
+	"AEROBIC",
+	"OTHER",
+];
