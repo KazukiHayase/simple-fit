@@ -40,13 +40,6 @@ const Layout = () => {
 								),
 							}}
 						/>
-						<Tabs.Screen
-							name="training/add/index"
-							options={{
-								title: "トレーニングを選択",
-								href: null,
-							}}
-						/>
 					</Tabs>
 				</RealmProvider>
 			</PaperProvider>
