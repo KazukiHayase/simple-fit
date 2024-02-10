@@ -8,9 +8,15 @@ import { Chip, Divider, List, Text } from "react-native-paper";
 export const TrainingAdd: React.FC = () => {
 	const [selected, setSelected] = useState<TrainingPart | "NONE">("NONE");
 
-	const trainingTypes = useQuery(TrainingType, (types) => {
-		return selected === "NONE" ? types.filtered("part == $0", selected) : types;
-	});
+	const trainingTypes = useQuery(
+		TrainingType,
+		(types) => {
+			return selected !== "NONE"
+				? types.filtered("part == $0", selected)
+				: types;
+		},
+		[selected],
+	);
 
 	const handlePressPart = (part: TrainingPart) => {
 		const newSelected = selected === part ? "NONE" : part;
