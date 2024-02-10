@@ -14,7 +14,6 @@ export const useSeed = () => {
 		// settingがない場合（初回）はseedを投入して、settingを作成する
 		// settingがある場合はseedVersionを確認して、違う場合はseedを投入する
 		if (!setting) {
-			console.log("init seed");
 			realm.write(() => {
 				for (const seed of TrainingTypeSeed) {
 					realm.create(TrainingType, seed, Realm.UpdateMode.Modified);
@@ -22,7 +21,6 @@ export const useSeed = () => {
 				realm.create(Setting, { _id: SETTING_ID, seedVersion: SEED_VERSION });
 			});
 		} else if (setting.seedVersion !== SEED_VERSION) {
-			console.log("update seed");
 			realm.write(() => {
 				for (const seed of TrainingTypeSeed) {
 					realm.create(TrainingType, seed, Realm.UpdateMode.Modified);
