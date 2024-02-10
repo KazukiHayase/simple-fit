@@ -11,7 +11,7 @@ export class TrainingType extends Realm.Object {
 	static schema: ObjectSchema = {
 		name: "TrainingType",
 		properties: {
-			_id: "objectId",
+			_id: { type: "objectId", default: () => new BSON.ObjectId() },
 			name: "string",
 			part: { type: "string", indexed: true },
 			lastTrainingDate: "date?",
