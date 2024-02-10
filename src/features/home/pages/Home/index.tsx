@@ -1,46 +1,18 @@
-import { useQuery, useRealm } from "@/realm";
+import { useQuery } from "@/realm";
 import { Training } from "@/realm/model/Training";
 import dayjs from "dayjs";
 import { Link } from "expo-router";
-import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Divider, FAB, List, useTheme } from "react-native-paper";
-import { BSON } from "realm";
 
 export const Home: React.FC = () => {
 	const styles = useStyle();
-
-	const realm = useRealm();
 
 	const trainings = useQuery(Training, (trainings) => {
 		const today = dayjs().locale("ja").toDate();
 		today.setHours(0, 0, 0, 0);
 		return trainings.filtered("createdAt >= $0", today);
 	});
-
-	// FIXME: 動作確認用データ投入
-	useEffect(() => {
-		realm.write(() => {
-			realm.deleteAll();
-			for (let i = 0; i < 10; i++) {
-				const type = realm.create("TrainingType", {
-					_id: new BSON.ObjectId(),
-					name: "ベンチプレス",
-					part: "CHEST",
-				});
-
-				realm.create("Training", {
-					_id: new BSON.ObjectId(),
-					type,
-					sets: [
-						{ weight: 10, reps: 10, memo: "" },
-						{ weight: 20, reps: 20, memo: "" },
-						{ weight: 30, reps: 30, memo: "" },
-					],
-				});
-			}
-		});
-	}, [realm]);
 
 	return (
 		<>
