@@ -1,10 +1,16 @@
 import { TrainingPart, TrainingPartList } from "@/consts/TrainingPart";
+import { useQuery } from "@/realm";
+import { TrainingType } from "@/realm/model/TrainingType";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Chip } from "react-native-paper";
+import { Chip, Divider, List, Text } from "react-native-paper";
 
 export const TrainingAdd: React.FC = () => {
 	const [selected, setSelected] = useState<TrainingPart | "NONE">("NONE");
+
+	const trainingTypes = useQuery(TrainingType, (types) => {
+		return selected === "NONE" ? types.filtered("part == $0", selected) : types;
+	});
 
 	const handlePressPart = (part: TrainingPart) => {
 		const newSelected = selected === part ? "NONE" : part;
@@ -29,6 +35,20 @@ export const TrainingAdd: React.FC = () => {
 						</Chip>
 					))}
 				</View>
+				{trainingTypes.length > 0 ? (
+					trainingTypes.map((type) => (
+						<View key={type._id.toString()}>
+							<List.Item title={type.name} />
+							<Divider />
+						</View>
+					))
+				) : (
+					<View style={styles.noneWrapper}>
+						<Text variant="titleMedium" style={styles.noneText}>
+							トレーニングがありません
+						</Text>
+					</View>
+				)}
 			</View>
 		</ScrollView>
 	);
@@ -36,6 +56,8 @@ export const TrainingAdd: React.FC = () => {
 
 const styles = StyleSheet.create({
 	wrapper: {
+		display: "flex",
+		flexDirection: "column",
 		padding: 16,
 	},
 	chipWrapper: {
@@ -43,11 +65,21 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		gap: 4,
 		flexWrap: "wrap",
+		marginBottom: 8,
 	},
 	chip: {
 		backgroundColor: "transparent",
 	},
 	chipSelected: {
 		backgroundColor: "rgba(0, 0, 0, 0.1)",
+	},
+	noneWrapper: {
+		height: "100%",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	noneText: {
+		textAlign: "center",
 	},
 });
