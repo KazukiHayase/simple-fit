@@ -1,6 +1,8 @@
 import { TrainingPart, TrainingPartList } from "@/consts/TrainingPart";
-import { useQuery } from "@/realm";
+import { useQuery, useRealm } from "@/realm";
+import { Training } from "@/realm/model/Training";
 import { TrainingType } from "@/realm/model/TrainingType";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Chip, Divider, List, Text } from "react-native-paper";
@@ -8,6 +10,9 @@ import { Chip, Divider, List, Text } from "react-native-paper";
 export const TrainingAdd: React.FC = () => {
 	const [selected, setSelected] = useState<TrainingPart | "NONE">("NONE");
 
+	const router = useRouter();
+
+	const realm = useRealm();
 	const trainingTypes = useQuery(
 		TrainingType,
 		(types) => {
@@ -21,6 +26,25 @@ export const TrainingAdd: React.FC = () => {
 	const handlePressPart = (part: TrainingPart) => {
 		const newSelected = selected === part ? "NONE" : part;
 		setSelected(newSelected);
+	};
+
+	const handleClickTrainingType = (type: TrainingType) => {
+		realm.write(() => {
+			const training = realm.create(Training, {
+				type,
+				sets: [],
+			});
+
+			// pushでモーダルが閉じないので、一旦戻ってから遷移する
+			// https://github.com/expo/expo/issues/26922
+			router.back();
+			setTimeout(() => {
+				router.push({
+					pathname: "/training/[id]",
+					params: { id: training._id.toString() },
+				});
+			}, 100);
+		});
 	};
 
 	return (
@@ -44,7 +68,10 @@ export const TrainingAdd: React.FC = () => {
 				{trainingTypes.length > 0 ? (
 					trainingTypes.map((type) => (
 						<View key={type._id.toString()}>
-							<List.Item title={type.name} />
+							<List.Item
+								title={type.name}
+								onPress={() => handleClickTrainingType(type)}
+							/>
 							<Divider />
 						</View>
 					))
