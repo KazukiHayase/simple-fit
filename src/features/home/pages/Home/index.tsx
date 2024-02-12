@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
 	return (
 		<>
 			<ScrollView>
-				<View style={styles.wrapper}>
+				<View style={styles.innerWrapper}>
 					<List.Section>
 						<List.Subheader style={styles.sectionHeader}>
 							今日のトレーニング
@@ -69,11 +69,10 @@ const useStyle = () => {
 			fontSize: 18,
 			fontWeight: "bold",
 		},
-		wrapper: {
+		innerWrapper: {
 			flex: 1,
 			padding: 16,
 			overflow: "scroll",
-			backgroundColor: colors.background,
 		},
 		sectionHeader: {
 			fontSize: 20,
