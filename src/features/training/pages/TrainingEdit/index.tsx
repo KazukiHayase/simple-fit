@@ -54,7 +54,7 @@ export const TrainingEdit: React.FC<TrainingEditProps> = ({ id }) => {
 	return (
 		<ScrollView>
 			<View style={styles.wrapper}>
-				<Text variant="titleMedium" style={styles.title}>
+				<Text variant="titleLarge" style={styles.title}>
 					{training.type.name}
 				</Text>
 				<Text variant="titleMedium">セット</Text>
