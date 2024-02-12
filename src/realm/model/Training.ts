@@ -4,7 +4,7 @@ import { TrainingType } from "./TrainingType";
 
 export class Training extends Realm.Object {
 	_id!: BSON.ObjectId;
-	createdAt: Date = new Date();
+	createdAt!: Date;
 	type!: TrainingType;
 	sets!: TrainingSet[];
 
