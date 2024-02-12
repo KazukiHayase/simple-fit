@@ -1,7 +1,7 @@
-import { Text } from "react-native";
+import { TrainingEdit } from "@/features/training/pages/TrainingEdit";
 
 const Page = () => {
-	return <Text>training edit</Text>;
+	return <TrainingEdit />;
 };
 
 export default Page;
