@@ -40,7 +40,7 @@ export const Home: React.FC = () => {
 					</List.Section>
 				</View>
 			</ScrollView>
-			<Link href="/home/modal" asChild>
+			<Link href="/tabs/home/modal" asChild>
 				<FAB icon="plus" style={styles.addButton} />
 			</Link>
 		</>
