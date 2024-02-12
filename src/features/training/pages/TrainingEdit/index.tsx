@@ -1,9 +1,10 @@
 import { useObject } from "@/realm";
 import { Training } from "@/realm/model/Training";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { useCallback } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Divider, Text, TextInput } from "react-native-paper";
+import { Divider, IconButton, Text, TextInput } from "react-native-paper";
 import { BSON } from "realm";
 import { Output, array, number, object, string } from "valibot";
 
@@ -26,34 +27,28 @@ type TrainingEditProps = {
 export const TrainingEdit: React.FC<TrainingEditProps> = ({ id }) => {
 	const training = useObject(Training, id);
 
-	const { control } = useForm<TrainingEditForm>({
+	const { control, getValues } = useForm<TrainingEditForm>({
 		defaultValues: {
 			sets: [
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
-				{ weight: 0, reps: 0, memo: "" },
 				{ weight: 0, reps: 0, memo: "" },
 				{ weight: 0, reps: 0, memo: "" },
 			],
 		},
 		resolver: valibotResolver(TrainingEditFormSchema),
 	});
-	const { fields } = useFieldArray({ control, name: "sets" });
+	const { fields, append } = useFieldArray({ control, name: "sets" });
+
+	const handleClickAdd = useCallback(() => {
+		append({ weight: 0, reps: 0, memo: "" });
+	}, [append]);
+
+	const handleClickCopy = useCallback(() => {
+		const sets = getValues("sets");
+		const lastSet = sets[sets.length - 1];
+		if (!lastSet) return;
+
+		append(lastSet);
+	}, [getValues, append]);
 
 	if (!training) return null;
 	return (
@@ -81,6 +76,14 @@ export const TrainingEdit: React.FC<TrainingEditProps> = ({ id }) => {
 						<Divider />
 					</View>
 				))}
+				<View style={styles.actionArea}>
+					<IconButton icon="plus" mode="outlined" onPress={handleClickAdd} />
+					<IconButton
+						icon="content-copy"
+						mode="outlined"
+						onPress={handleClickCopy}
+					/>
+				</View>
 			</View>
 		</ScrollView>
 	);
@@ -113,5 +116,11 @@ const styles = StyleSheet.create({
 	setItemInput: {
 		width: 60,
 		height: 40,
+	},
+	actionArea: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "center",
+		marginTop: 16,
 	},
 });
