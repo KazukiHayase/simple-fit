@@ -22,6 +22,7 @@ const Layout = () => {
 							<Stack.Screen
 								name="training/[id]"
 								options={{
+                  title: "トレーニング",
 									headerBackTitle: "戻る",
 								}}
 							/>
