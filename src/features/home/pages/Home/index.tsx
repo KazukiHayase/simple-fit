@@ -24,16 +24,23 @@ export const Home: React.FC = () => {
 						</List.Subheader>
 						{trainings.map(({ _id, type, sets }) => (
 							<View key={_id.toString()}>
-								<List.Item
-									title={type.name}
-									description={`${sets.length}セット`}
-									right={(props) => (
-										<List.Icon {...props} icon="chevron-right" />
-									)}
-									titleStyle={{ fontWeight: "bold" }}
-									style={styles.listItem}
-									onPress={() => alert(`pressed ${_id.toString()}`)}
-								/>
+								<Link
+									href={{
+										pathname: "/training/[id]",
+										params: { id: _id.toString() },
+									}}
+									asChild
+								>
+									<List.Item
+										title={type.name}
+										description={`${sets.length}セット`}
+										right={(props) => (
+											<List.Icon {...props} icon="chevron-right" />
+										)}
+										titleStyle={{ fontWeight: "bold" }}
+										style={styles.listItem}
+									/>
+								</Link>
 								<Divider />
 							</View>
 						))}
