@@ -1,7 +1,23 @@
 import { useObject } from "@/realm";
 import { Training } from "@/realm/model/Training";
-import { Text } from "react-native-paper";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { useFieldArray, useForm } from "react-hook-form";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Divider, Text, TextInput } from "react-native-paper";
 import { BSON } from "realm";
+import { Output, array, number, object, string } from "valibot";
+
+const TrainingEditFormSchema = object({
+	sets: array(
+		object({
+			weight: number(),
+			reps: number(),
+			memo: string(),
+		}),
+	),
+});
+
+type TrainingEditForm = Output<typeof TrainingEditFormSchema>;
 
 type TrainingEditProps = {
 	id: BSON.ObjectId;
@@ -10,10 +26,92 @@ type TrainingEditProps = {
 export const TrainingEdit: React.FC<TrainingEditProps> = ({ id }) => {
 	const training = useObject(Training, id);
 
+	const { control } = useForm<TrainingEditForm>({
+		defaultValues: {
+			sets: [
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+				{ weight: 0, reps: 0, memo: "" },
+			],
+		},
+		resolver: valibotResolver(TrainingEditFormSchema),
+	});
+	const { fields } = useFieldArray({ control, name: "sets" });
+
 	if (!training) return null;
 	return (
-		<>
-			<Text>{training.type.name}</Text>
-		</>
+		<ScrollView>
+			<View style={styles.wrapper}>
+				<Text variant="titleMedium" style={styles.title}>
+					{training.type.name}
+				</Text>
+				<Text variant="titleMedium">セット</Text>
+				{fields.map((field, index) => (
+					<View key={field.id}>
+						<View key={field.id} style={styles.setItemWrapper}>
+							<Text>{index + 1}. </Text>
+							<View style={styles.setItemRow}>
+								<Text>重量</Text>
+								<TextInput mode="outlined" style={styles.setItemInput} />
+								<Text>kg</Text>
+							</View>
+							<Text>×</Text>
+							<View style={styles.setItemRow}>
+								<TextInput mode="outlined" style={styles.setItemInput} />
+								<Text>回</Text>
+							</View>
+						</View>
+						<Divider />
+					</View>
+				))}
+			</View>
+		</ScrollView>
 	);
 };
+
+const styles = StyleSheet.create({
+	wrapper: {
+		display: "flex",
+		flexDirection: "column",
+		padding: 16,
+	},
+	title: {
+		marginBottom: 16,
+		fontWeight: "bold",
+	},
+	setItemWrapper: {
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 8,
+		paddingTop: 16,
+		paddingBottom: 16,
+	},
+	setItemRow: {
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 8,
+	},
+	setItemInput: {
+		width: 60,
+		height: 40,
+	},
+});
