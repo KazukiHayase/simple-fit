@@ -4,7 +4,7 @@ import { schema } from "./model";
 
 const config: Realm.Configuration = {
 	schema,
-	schemaVersion: 1,
+	schemaVersion: 3,
 };
 
 export const { RealmProvider, useQuery, useRealm, useObject } =

@@ -1,8 +1,9 @@
+import { NumberInput } from "@/components/Form/NumberInput";
 import { useObject } from "@/realm";
 import { Training } from "@/realm/model/Training";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useCallback } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Divider, IconButton, Text, TextInput } from "react-native-paper";
 import { BSON } from "realm";
@@ -64,12 +65,20 @@ export const TrainingEdit: React.FC<TrainingEditProps> = ({ id }) => {
 							<Text>{index + 1}. </Text>
 							<View style={styles.setItemRow}>
 								<Text>重量</Text>
-								<TextInput mode="outlined" style={styles.setItemInput} />
+								<NumberInput
+									control={control}
+									name={`sets.${index}.weight`}
+									style={styles.setItemInput}
+								/>
 								<Text>kg</Text>
 							</View>
 							<Text>×</Text>
 							<View style={styles.setItemRow}>
-								<TextInput mode="outlined" style={styles.setItemInput} />
+								<NumberInput
+									control={control}
+									name={`sets.${index}.reps`}
+									style={styles.setItemInput}
+								/>
 								<Text>回</Text>
 							</View>
 						</View>
