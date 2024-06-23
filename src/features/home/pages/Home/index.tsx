@@ -1,13 +1,22 @@
 import { useQuery } from "@/realm";
 import { Training } from "@/realm/model/Training";
+import {
+	AddIcon,
+	Box,
+	ChevronRightIcon,
+	Fab,
+	FabIcon,
+	FlatList,
+	HStack,
+	Heading,
+	Icon,
+	Text,
+	VStack,
+} from "@gluestack-ui/themed";
 import dayjs from "dayjs";
 import { Link } from "expo-router";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { Divider, FAB, List, useTheme } from "react-native-paper";
 
 export const Home: React.FC = () => {
-	const styles = useStyle();
-
 	const trainings = useQuery(Training, (trainings) => {
 		const today = dayjs().locale("ja").toDate();
 		today.setHours(0, 0, 0, 0);
@@ -16,77 +25,46 @@ export const Home: React.FC = () => {
 
 	return (
 		<>
-			<ScrollView>
-				<View style={styles.innerWrapper}>
-					<List.Section>
-						<List.Subheader style={styles.sectionHeader}>
+			<Box py="$4" bgColor="$white">
+				<FlatList
+					px="$4"
+					data={trainings}
+					// See: https://github.com/gluestack/gluestack-ui/issues/1041
+					keyExtractor={(training) => (training as Training)._id.toString()}
+					ListHeaderComponent={() => (
+						<Heading size="xl" bold mb="$4">
 							今日のトレーニング
-						</List.Subheader>
-						{trainings.map(({ _id, type, sets }) => (
-							<View key={_id.toString()}>
-								<Link
-									href={{
-										pathname: "/training/[id]",
-										params: { id: _id.toString() },
-									}}
-									asChild
+						</Heading>
+					)}
+					renderItem={({ item }) => {
+						const training = item as Training;
+						return (
+							<Box py="$2" borderTopWidth="$1" borderColor="$borderLight100">
+								<HStack
+									space="md"
+									justifyContent="space-between"
+									alignItems="center"
 								>
-									<List.Item
-										title={type.name}
-										description={`${sets.length}セット`}
-										right={(props) => (
-											<List.Icon {...props} icon="chevron-right" />
-										)}
-										titleStyle={{ fontWeight: "bold" }}
-										style={styles.listItem}
-									/>
-								</Link>
-								<Divider />
-							</View>
-						))}
-					</List.Section>
-				</View>
-			</ScrollView>
+									<VStack>
+										<Text color="$coolGray800" fontWeight="$medium">
+											{training.type.name}
+										</Text>
+										<Text size="sm" color="$textLight500">
+											{`${training.sets.length}セット`}
+										</Text>
+									</VStack>
+									<Icon as={ChevronRightIcon} size="md" color="$textLight500" />
+								</HStack>
+							</Box>
+						);
+					}}
+				/>
+			</Box>
 			<Link href="/tabs/home/modal" asChild>
-				<FAB icon="plus" style={styles.addButton} />
+				<Fab size="lg" bg="$warmGray900">
+					<FabIcon as={AddIcon} size="xl" />
+				</Fab>
 			</Link>
 		</>
 	);
-};
-
-const useStyle = () => {
-	const { colors } = useTheme();
-
-	return StyleSheet.create({
-		header: {
-			display: "flex",
-			alignItems: "center",
-			height: 40,
-			borderBottomWidth: 1,
-			borderBottomColor: colors.surfaceVariant,
-		},
-		headerTitle: {
-			fontSize: 18,
-			fontWeight: "bold",
-		},
-		innerWrapper: {
-			flex: 1,
-			padding: 16,
-			overflow: "scroll",
-		},
-		sectionHeader: {
-			fontSize: 20,
-			fontWeight: "bold",
-		},
-		listItem: {
-			width: "100%",
-			paddingRight: 10,
-		},
-		addButton: {
-			position: "absolute",
-			right: 30,
-			bottom: 50,
-			borderRadius: 50,
-		},
-	});
 };
