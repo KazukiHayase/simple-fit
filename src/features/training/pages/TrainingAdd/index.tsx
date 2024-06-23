@@ -35,15 +35,10 @@ export const TrainingAdd: React.FC = () => {
 				sets: [],
 			});
 
-			// pushでモーダルが閉じないので、一旦戻ってから遷移する
-			// https://github.com/expo/expo/issues/26922
-			router.back();
-			setTimeout(() => {
-				router.push({
-					pathname: "/training/[id]",
-					params: { id: training._id.toString() },
-				});
-			}, 100);
+			router.push({
+				pathname: "/training/[id]",
+				params: { id: training._id.toString() },
+			});
 		});
 	};
 
