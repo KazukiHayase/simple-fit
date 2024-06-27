@@ -44,6 +44,7 @@ export const TrainingAdd: React.FC = () => {
 				sets: [],
 			});
 
+			router.back();
 			router.push({
 				pathname: "/training/[id]",
 				params: { id: training._id.toString() },
