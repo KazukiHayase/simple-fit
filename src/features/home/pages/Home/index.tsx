@@ -39,7 +39,12 @@ export const Home: React.FC = () => {
 					renderItem={({ item }) => {
 						const training = item as Training;
 						return (
-							<Box py="$2" borderTopWidth="$1" borderColor="$borderLight100">
+							<Box
+								py="$2"
+								px="$1"
+								borderTopWidth="$1"
+								borderColor="$borderLight100"
+							>
 								<HStack
 									space="md"
 									justifyContent="space-between"
