@@ -2,10 +2,19 @@ import { TrainingPart, TrainingPartList } from "@/consts/TrainingPart";
 import { useQuery, useRealm } from "@/realm";
 import { Training } from "@/realm/model/Training";
 import { TrainingType } from "@/realm/model/TrainingType";
+import {
+	Box,
+	Button,
+	ButtonGroup,
+	ButtonText,
+	FlatList,
+	HStack,
+	Text,
+} from "@gluestack-ui/themed";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Chip, Divider, List, Text } from "react-native-paper";
+// import { Chip, Divider, List, Text } from "react-native-paper";
 
 export const TrainingAdd: React.FC = () => {
 	const [selected, setSelected] = useState<TrainingPart | "NONE">("NONE");
@@ -43,71 +52,66 @@ export const TrainingAdd: React.FC = () => {
 	};
 
 	return (
-		<ScrollView>
-			<View style={styles.wrapper}>
-				<View style={styles.chipWrapper}>
-					{TrainingPartList.map((part) => (
-						<Chip
-							key={part}
-							mode="outlined"
-							style={selected === part ? styles.chipSelected : styles.chip}
-							selected={selected === part}
-							showSelectedCheck={false}
-							showSelectedOverlay
-							onPress={() => handlePressPart(part)}
+		<Box h="$full" bg="$white">
+			<ButtonGroup space="sm" flexWrap="wrap" p="$2">
+				{TrainingPartList.map((part) => (
+					<Button
+						key={part}
+						size="sm"
+						variant="outline"
+						{...(selected === part
+							? {
+									bg: "$warmGray900",
+									borderColor: "$transparent",
+							  }
+							: {
+									bg: "$white",
+									borderColor: "$warmGray900",
+							  })}
+						onPress={() => handlePressPart(part)}
+					>
+						<ButtonText
+							{...(selected === part
+								? { color: "$white" }
+								: { color: "$warmGray900" })}
 						>
 							{TrainingPart[part]}
-						</Chip>
-					))}
-				</View>
-				{trainingTypes.length > 0 ? (
-					trainingTypes.map((type) => (
-						<View key={type._id.toString()}>
-							<List.Item
-								title={type.name}
-								onPress={() => handleClickTrainingType(type)}
-							/>
-							<Divider />
-						</View>
-					))
-				) : (
-					<View style={styles.noneWrapper}>
-						<Text variant="titleMedium" style={styles.noneText}>
-							トレーニングがありません
-						</Text>
-					</View>
-				)}
-			</View>
-		</ScrollView>
+						</ButtonText>
+					</Button>
+				))}
+			</ButtonGroup>
+			<FlatList
+				data={trainingTypes}
+				keyExtractor={(item) => (item as TrainingType)._id.toString()}
+				renderItem={({ item }) => {
+					const trainingType = item as TrainingType;
+					return (
+						<Box py="$2" borderTopWidth="$1" borderColor="$borderLight100">
+							<View key={trainingType._id.toString()}>
+								<Text onPress={() => handleClickTrainingType(trainingType)}>
+									{trainingType.name}
+								</Text>
+							</View>
+							{/* <HStack */}
+							{/* 	space="md" */}
+							{/* 	justifyContent="space-between" */}
+							{/* 	alignItems="center" */}
+							{/* > */}
+							{/* 	<VStack> */}
+							{/* 		<Text color="$coolGray800" fontWeight="$medium"> */}
+							{/* 			{training.type.name} */}
+							{/* 		</Text> */}
+							{/* 		<Text size="sm" color="$textLight500"> */}
+							{/* 			{`${training.sets.length}セット`} */}
+							{/* 		</Text> */}
+							{/* 	</VStack> */}
+							{/* 	<Icon as={ChevronRightIcon} size="md" color="$textLight500" /> */}
+							{/* </HStack> */}
+						</Box>
+					);
+				}}
+				ListEmptyComponent={() => <Text>トレーニングがありません</Text>}
+			/>
+		</Box>
 	);
 };
-
-const styles = StyleSheet.create({
-	wrapper: {
-		display: "flex",
-		flexDirection: "column",
-		padding: 16,
-	},
-	chipWrapper: {
-		display: "flex",
-		flexDirection: "row",
-		gap: 4,
-		flexWrap: "wrap",
-		marginBottom: 8,
-	},
-	chip: {
-		backgroundColor: "transparent",
-	},
-	chipSelected: {
-		backgroundColor: "rgba(0, 0, 0, 0.1)",
-	},
-	noneWrapper: {
-		height: "100%",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	noneText: {
-		textAlign: "center",
-	},
-});
