@@ -3,18 +3,18 @@ import { useQuery, useRealm } from "@/realm";
 import { Training } from "@/realm/model/Training";
 import { TrainingType } from "@/realm/model/TrainingType";
 import {
-	Box,
 	Button,
 	ButtonGroup,
 	ButtonText,
+	Center,
 	FlatList,
-	HStack,
+	Pressable,
+	SafeAreaView,
 	Text,
 } from "@gluestack-ui/themed";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-// import { Chip, Divider, List, Text } from "react-native-paper";
+import { View } from "react-native";
 
 export const TrainingAdd: React.FC = () => {
 	const [selected, setSelected] = useState<TrainingPart | "NONE">("NONE");
@@ -52,7 +52,7 @@ export const TrainingAdd: React.FC = () => {
 	};
 
 	return (
-		<Box h="$full" bg="$white">
+		<SafeAreaView h="$full" bg="$white">
 			<ButtonGroup space="sm" flexWrap="wrap" p="$2">
 				{TrainingPartList.map((part) => (
 					<Button
@@ -81,37 +81,31 @@ export const TrainingAdd: React.FC = () => {
 				))}
 			</ButtonGroup>
 			<FlatList
+				px="$2"
 				data={trainingTypes}
 				keyExtractor={(item) => (item as TrainingType)._id.toString()}
 				renderItem={({ item }) => {
 					const trainingType = item as TrainingType;
 					return (
-						<Box py="$2" borderTopWidth="$1" borderColor="$borderLight100">
+						<Pressable
+							px="$1"
+							py="$3"
+							borderBottomWidth="$1"
+							borderColor="$borderLight100"
+							onPress={() => handleClickTrainingType(trainingType)}
+						>
 							<View key={trainingType._id.toString()}>
-								<Text onPress={() => handleClickTrainingType(trainingType)}>
-									{trainingType.name}
-								</Text>
+								<Text color="$coolGray800">{trainingType.name}</Text>
 							</View>
-							{/* <HStack */}
-							{/* 	space="md" */}
-							{/* 	justifyContent="space-between" */}
-							{/* 	alignItems="center" */}
-							{/* > */}
-							{/* 	<VStack> */}
-							{/* 		<Text color="$coolGray800" fontWeight="$medium"> */}
-							{/* 			{training.type.name} */}
-							{/* 		</Text> */}
-							{/* 		<Text size="sm" color="$textLight500"> */}
-							{/* 			{`${training.sets.length}セット`} */}
-							{/* 		</Text> */}
-							{/* 	</VStack> */}
-							{/* 	<Icon as={ChevronRightIcon} size="md" color="$textLight500" /> */}
-							{/* </HStack> */}
-						</Box>
+						</Pressable>
 					);
 				}}
-				ListEmptyComponent={() => <Text>トレーニングがありません</Text>}
+				ListEmptyComponent={() => (
+					<Center py="$5">
+						<Text>トレーニングがありません</Text>
+					</Center>
+				)}
 			/>
-		</Box>
+		</SafeAreaView>
 	);
 };
