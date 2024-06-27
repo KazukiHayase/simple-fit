@@ -25,7 +25,7 @@ export const Home: React.FC = () => {
 
 	return (
 		<>
-			<Box py="$4" bgColor="$white">
+			<Box h="$full" py="$4" bgColor="$white">
 				<FlatList
 					px="$4"
 					data={trainings}
