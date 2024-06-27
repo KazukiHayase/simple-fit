@@ -10,6 +10,7 @@ import {
 	HStack,
 	Heading,
 	Icon,
+	SafeAreaView,
 	Text,
 	VStack,
 } from "@gluestack-ui/themed";
@@ -24,8 +25,8 @@ export const Home: React.FC = () => {
 	});
 
 	return (
-		<>
-			<Box h="$full" py="$4" bgColor="$white">
+		<SafeAreaView h="$full" pb="$0" bg="$white">
+			<Box h="$full" py="$2">
 				<FlatList
 					px="$4"
 					data={trainings}
@@ -70,6 +71,6 @@ export const Home: React.FC = () => {
 					<FabIcon as={AddIcon} size="xl" />
 				</Fab>
 			</Link>
-		</>
+		</SafeAreaView>
 	);
 };
