@@ -43,7 +43,7 @@ export const Home: React.FC = () => {
 					// See: https://github.com/gluestack/gluestack-ui/issues/1041
 					keyExtractor={(training) => (training as Training)._id.toString()}
 					ListHeaderComponent={() => (
-						<Heading size="xl" bold mb="$4">
+						<Heading size="xl" bold mb="$3">
 							今日のトレーニング
 						</Heading>
 					)}
